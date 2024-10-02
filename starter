@@ -1,0 +1,14 @@
+###########################################################
+# Config
+###########################################################
+shopt -s dotglob
+for file in "$HOME/dotfiles"/*; do
+  if [ -f "$file" ]; then
+    filename=$(basename "$file")
+    if [ "$filename" != "starter" ]; then
+        ln -s "$file" "$HOME/$filename"
+        echo "Created symlink: $HOME/$filename -> $file"
+    fi
+  fi
+done
+shopt -u dotglob
