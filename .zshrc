@@ -131,6 +131,8 @@ else
 fi
 
 # ros2
-source /usr/share/colcon_cd/function/colcon_cd.sh
-export _colcon_cd_root=/opt/ros/humble/
-
+if [ -f /usr/share/colcon_cd/function/colcon_cd.sh ]; then
+    # if exist，source file
+    source /usr/share/colcon_cd/function/colcon_cd.sh
+    export _colcon_cd_root=/opt/ros/humble/
+fi
