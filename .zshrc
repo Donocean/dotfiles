@@ -15,7 +15,6 @@ set -o vi
 alias ..="cd .."
 alias vi="nvim"
 alias vf='vifm .'
-alias proxy=proxychains
 
 # esp
 alias ii=idf.py
@@ -92,6 +91,22 @@ fs() {
   if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
   file=$(rg --files-with-matches --no-messages "$1" | fzf --preview "highlight -O ansi -l {} 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}")
   nvim $file
+}
+
+# set proxy
+function proxy() {
+  export http_proxy=socks5://127.0.0.1:8888
+  export https_proxy=socks5://127.0.0.1:8888
+  export ALL_PROXY=socks5://127.0.0.1:8888
+  echo -e "\e[32mProxy has been successfully set.\e[0m"
+}
+
+# unset
+function unproxy() {
+  unset http_proxy
+  unset https_proxy
+  unset ALL_PROXY
+  echo -e "\e[31mProxy has been unset.\e[0m"
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
