@@ -151,3 +151,17 @@ if [ -f /usr/share/colcon_cd/function/colcon_cd.sh ]; then
     source /usr/share/colcon_cd/function/colcon_cd.sh
     export _colcon_cd_root=/opt/ros/humble/
 fi
+
+# quick ssh connecting. for connecting OrangePi.
+cpi() {
+    if [ -z "$1" ]; then
+        echo "请输入IP!\n如IP: 192.168.1.100\n输入:\e[31m cpi 1.100\e[0m "
+        return 1
+    fi
+
+    # 设置终端类型
+    export TERM=xterm
+
+    # 执行 SSH 命令
+    ssh orangepi@192.168."$1"
+}
