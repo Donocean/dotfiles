@@ -6,6 +6,8 @@ set nocompatible nosmartindent autoindent noincsearch nostartofline title ruler 
 set fileencodings=utf-8,latin-1,chinese,gbk,gb2312,gb18030 encoding=utf-8 langmenu=none
 set number 
 set expandtab tabstop=4 softtabstop=4 shiftwidth=4
+" highlight the  cursor line
+set cursorline
 
 set clipboard=unnamed
 
@@ -30,8 +32,6 @@ highlight Comment cterm=bold
 " 1. Install "https://github.com/junegunn/vim-plug", 
 " 2. run ":PlugInstall"
 call plug#begin()
-
-Plug 'sainnhe/everforest'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'tpope/vim-surround'
@@ -61,7 +61,8 @@ Plug 'justinmk/vim-sneak'
 call plug#end()
 
 try
-    colorscheme everforest
+    colorscheme ron
+    colorscheme retrobox
 catch
     " avoid error
 endtry
@@ -104,7 +105,7 @@ nnoremap <space>bb :buffers<cr>:b<space>
 function! CloseOtherBuffers()
     let current = bufnr('%')
     for buf in range(1, bufnr('$'))
-        if buf != current && bufexists(buf)
+        if buf != current && buflisted(buf)
             execute 'bdelete '.buf
         endif
     endfor
@@ -117,6 +118,8 @@ nnoremap <c-s> :w<cr>
 " better indenting
 vmap < <gv
 vmap > >gv
+
+nnoremap <space>n :nohl<cr>
 
 " remap jump
 let g:sneak#label = 1
@@ -134,16 +137,9 @@ nmap <space>e :NERDTreeToggle<cr>
 map <cr> <Plug>(wildfire-fuel)
 vmap <bs> <Plug>(wildfire-water)
 
+" generate doxygen
+nnoremap <space>cn :Dox<cr>
+
 " use <c-d> to quit terminal
 nnoremap <space>w :set splitbelow<cr>:terminal<cr>
-tnoremap <c-c> <C-\><C-n>
-
-augroup close_with_q
-    autocmd!
-    autocmd FileType help,man call s:close_with_q()
-augroup END
-
-function! s:close_with_q()
-    setlocal buflisted = 0
-    nnoremap <buffer> q :close<CR>
-endfunction
+tnoremap <c-c> <C-\><C-n>:q!<cr>
