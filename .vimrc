@@ -8,6 +8,7 @@ set number
 set expandtab tabstop=4 softtabstop=4 shiftwidth=4
 " highlight the  cursor line
 set cursorline
+set jumpoptions=stack
 
 set clipboard=unnamed
 
@@ -89,10 +90,10 @@ inoremap <c-c> <esc>
 " windows
 " special: [ctrl-w_o] close all windows but this one
 " USE [ctrl-w-T] to move split_window to the new tab_windows
-nnoremap <c-h> <c-w>h 
-nnoremap <c-l> <c-w>l 
-nnoremap <c-j> <c-w>j 
-nnoremap <c-k> <c-w>k 
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
 
 " buffers
 nnoremap <S-h> :bprevious<cr> 
@@ -100,7 +101,7 @@ nnoremap <S-l> :bnext<cr>
 "close current buffer" 
 nnoremap <space>bd :bd %<cr>
 " switch buffers
-nnoremap <space>bb :buffers<cr>:b<space>
+nnoremap <space>, :buffers<cr>:b<space>
 " buffer only
 function! CloseOtherBuffers()
     let current = bufnr('%')
@@ -142,4 +143,4 @@ nnoremap <space>cn :Dox<cr>
 
 " use <c-d> to quit terminal
 nnoremap <space>w :set splitbelow<cr>:terminal<cr>
-tnoremap <c-c> <C-\><C-n>:q!<cr>
+tnoremap <c-q> <C-\><C-n>:q!<cr><esc>
