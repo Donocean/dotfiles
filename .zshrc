@@ -7,7 +7,7 @@ fi
 
 # fix color bug on wsl2 in window
 export COLORTERM=truecolor
-export TERM=xterm-256color
+export TERM=screen-256color
 
 alias condaac="conda activate"
 alias condade="conda deactivate"
