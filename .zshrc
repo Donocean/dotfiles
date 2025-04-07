@@ -154,6 +154,23 @@ if [ -f /usr/share/colcon_cd/function/colcon_cd.sh ]; then
     # if exist，source file
     source /usr/share/colcon_cd/function/colcon_cd.sh
     export _colcon_cd_root=/opt/ros/humble/
+
+    # ros2
+    source /opt/ros/humble/setup.zsh
+
+    alias rcd='colcon_cd'
+    alias rmsg='ros2 msg'
+    alias rr='ros2 run'
+    alias rn='ros2 node'
+    alias rt='ros2 topic'
+    alias rl='ros2 launch'
+    alias rp='ros2 param'
+    alias rs='ros2 service'
+    alias rpkg='ros2 pkg'
+elif [ -f /opt/ros/noetic/setup.zsh ]; then
+    source /opt/ros/noetic/setup.zsh
+    export ROS_HOSTNAME=localhost
+    export ROS_MASTER_URI=http://localhost:11311
 fi
 
 # quick ssh connecting. for connecting OrangePi.
@@ -168,4 +185,18 @@ cpi() {
 
     # 执行 SSH 命令
     ssh orangepi@192.168."$1"
+}
+
+export PLANNER_NAME=my_planner
+export PX4_DIR=$HOME/PX4-Autopilot
+export PATH="$HOME/.local/bin/:$PATH"
+
+alias sp='source $HOME/$whoami/$PLANNER_NAME/devel/setup.zsh'
+alias pp='cd $HOME/$whoami/$PLANNER_NAME'
+
+function pxsim() {
+    # run this after you move the "[$PX4_DIR/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models/D435i/lib/*.so]" file to the [$PX4_DIR/build/px4_sitl_default]
+    source $PX4_DIR/Tools/simulation/gazebo-classic/setup_gazebo.bash $PX4_DIR $PX4_DIR/build/px4_sitl_default
+    export ROS_PACKAGE_PATH="$PX4_DIR:$ROS_PACKAGE_PATH"
+    export ROS_PACKAGE_PATH="$PX4_DIR/Tools/simulation/gazebo-classic/sitl_gazebo-classic:$ROS_PACKAGE_PATH"
 }
