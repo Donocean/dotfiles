@@ -187,12 +187,12 @@ cpi() {
     ssh orangepi@192.168."$1"
 }
 
-export PLANNER_NAME=my_planner
+export PLANNER_DIR=$HOME/my_planner
 export PX4_DIR=$HOME/PX4-Autopilot
 export PATH="$HOME/.local/bin/:$PATH"
 
-alias sp='source $HOME/$PLANNER_NAME/devel/setup.zsh'
-alias pp='cd $HOME/$PLANNER_NAME'
+alias sp='source $PLANNER_DIR/devel/setup.zsh'
+alias pp='cd $PLANNER_DIR'
 
 function pxsim() {
     # run this after you move the "[$PX4_DIR/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models/D435i/lib/*.so]" file to the [$PX4_DIR/build/px4_sitl_default]
