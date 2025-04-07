@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 # link all dotfiles in the  $HOME/dotfiles
@@ -23,76 +23,77 @@ command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
-# install fzf
-if [ ! -d "$HOME/.fzf" ]; then
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    yes | ~/.fzf/install
-else
-    echo "fzf already installed, skipping..."
-fi
-
-# install ripgrep
-if ! command_exists rg; then
-    sudo apt install -y ripgrep
-else
-    echo "ripgrep already installed, skipping..."
-fi
-
-# intall fd-find
-if ! command_exists fdfind; then
-    sudo apt install -y fd-find
-else
-    echo "fd-find already installed, skipping..."
-fi
-
-# intall vifm
-if ! command_exists vifm; then
-    sudo apt install -y vifm
-else
-    echo "vifm already installed, skipping..."
-fi
-
-# install tmux
-if ! command_exists tmux; then
-    sudo apt install -y tmux
-else
-    echo "tmux already installed, skipping..."
-fi
-
-# clone my nvim configuration
-if [ ! -d "$HOME/.config/nvim" ]; then
-    git clone https://github.com/Donocean/nvim.git ~/.config/nvim
-else
-    echo "nvim config already exists, skipping..."
-fi
-
-# clone my vifm configuration
-if [ ! -d "$HOME/.config/vifm" ]; then
-    git clone https://github.com/Donocean/vifm.git ~/.config/vifm
-else
-    echo "vifm config already exists, skipping..."
-fi
-
-# install neovim for x86_64 arch
-nvim_path="$HOME/.local/bin/nvim"
-if [ ! -f "$nvim_path" ]; then
-    temp_file="$HOME/nvim-linux-x86_64.appimage"
-    [ -f "$temp_file" ] && rm "$temp_file"
-
-    if ! curl -L -o "$temp_file" https://github.com/neovim/neovim/releases/download/v0.11.0/nvim-linux-x86_64.appimage; then
-        echo "Failed to download neovim, check network connection"
-        exit 1
+# (only for Ubuntu)
+if grep -q '^ID=ubuntu$' /etc/os-release; then
+    # install fzf
+    if [ ! -d "$HOME/.fzf" ]; then
+        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+        yes | ~/.fzf/install
+    else
+        echo "fzf already installed, skipping..."
     fi
 
-    chmod u+x "$temp_file"
-    mkdir -p ~/.local/bin
-    mv "$temp_file" "$nvim_path"
-else
-    echo "neovim already installed, skipping..."
-fi
+    # install ripgrep
+    if ! command_exists rg; then
+        sudo apt install -y ripgrep
+    else
+        echo "ripgrep already installed, skipping..."
+    fi
 
-# instatll ulauncher（only Ubuntu）
-if grep -q '^ID=ubuntu$' /etc/os-release; then
+    # intall fd-find
+    if ! command_exists fdfind; then
+        sudo apt install -y fd-find
+    else
+        echo "fd-find already installed, skipping..."
+    fi
+
+    # intall vifm
+    if ! command_exists vifm; then
+        sudo apt install -y vifm
+    else
+        echo "vifm already installed, skipping..."
+    fi
+
+    # install tmux
+    if ! command_exists tmux; then
+        sudo apt install -y tmux
+    else
+        echo "tmux already installed, skipping..."
+    fi
+
+    # clone my nvim configuration
+    if [ ! -d "$HOME/.config/nvim" ]; then
+        git clone https://github.com/Donocean/nvim.git ~/.config/nvim
+    else
+        echo "nvim config already exists, skipping..."
+    fi
+
+    # clone my vifm configuration
+    if [ ! -d "$HOME/.config/vifm" ]; then
+        git clone https://github.com/Donocean/vifm.git ~/.config/vifm
+    else
+        echo "vifm config already exists, skipping..."
+    fi
+
+    # install neovim for x86_64 arch
+    nvim_path="$HOME/.local/bin/nvim"
+    if [ ! -f "$nvim_path" ]; then
+        temp_file="$HOME/nvim-linux-x86_64.appimage"
+        [ -f "$temp_file" ] && rm "$temp_file"
+
+        if ! curl -L -o "$temp_file" https://github.com/neovim/neovim/releases/download/v0.11.0/nvim-linux-x86_64.appimage; then
+            echo "Failed to download neovim, check network connection"
+            exit 1
+        fi
+
+        chmod u+x "$temp_file"
+        mkdir -p ~/.local/bin
+        mv "$temp_file" "$nvim_path"
+    else
+        echo "neovim already installed, skipping..."
+    fi
+
+    # install ulauncher
     if ! command_exists ulauncher; then
         sudo apt install -y software-properties-common
         sudo add-apt-repository universe -y
