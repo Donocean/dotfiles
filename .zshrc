@@ -191,8 +191,8 @@ export PLANNER_NAME=my_planner
 export PX4_DIR=$HOME/PX4-Autopilot
 export PATH="$HOME/.local/bin/:$PATH"
 
-alias sp='source $HOME/$whoami/$PLANNER_NAME/devel/setup.zsh'
-alias pp='cd $HOME/$whoami/$PLANNER_NAME'
+alias sp='source $HOME/$PLANNER_NAME/devel/setup.zsh'
+alias pp='cd $HOME/$PLANNER_NAME'
 
 function pxsim() {
     # run this after you move the "[$PX4_DIR/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models/D435i/lib/*.so]" file to the [$PX4_DIR/build/px4_sitl_default]
