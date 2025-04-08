@@ -1,6 +1,15 @@
 #!/bin/bash
 set -e
 
+# 脚本接受两个参数
+IS_ARM=${1:-"no"}             # 第一个参数是否ARM架构（默认no）
+INSTALL_ULAUNCHER=${2:-"no"}  # 第二个参数是否安装ulauncher（默认no）
+
+# 显示参数状态
+echo "当前配置："
+echo "· 架构模式：$([ "$IS_ARM" = "arm" ] && echo "ARM" || echo "x86_64")"
+echo "· 是否安装Ulauncher：$([ "$INSTALL_ULAUNCHER" = "yes" ] && echo "是" || echo "否")"
+
 # link all dotfiles in the  $HOME/dotfiles
 shopt -s dotglob
 for file in "$HOME/dotfiles"/*; do
@@ -78,30 +87,44 @@ if grep -q '^ID=ubuntu$' /etc/os-release; then
     # install neovim for x86_64 arch
     nvim_path="$HOME/.local/bin/nvim"
     if [ ! -f "$nvim_path" ]; then
-        temp_file="$HOME/nvim-linux-x86_64.appimage"
-        [ -f "$temp_file" ] && rm "$temp_file"
+        if [ "$IS_ARM" = "arm" ]; then
+            echo "Installing Neovim for arm..."
+            temp_dir="$HOME/neovim_bin_for_aarch64"
+            git clone https://gitee.com/Donocean/neovim_bin_for_aarch64.git "$temp_dir"
+            mkdir -p ~/.local/bin
+            cp -v "$temp_dir/nvim" "$nvim_path"
+            rm -rf "$temp_dir"
+        else
+            echo "Installing Neovim for x86_64..."
+            temp_file="$HOME/nvim-linux-x86_64.appimage"
+            [ -f "$temp_file" ] && rm "$temp_file"
 
-        if ! curl -L -o "$temp_file" https://github.com/neovim/neovim/releases/download/v0.10.3/nvim.appimage; then
-            echo "Failed to download neovim, check network connection"
-            exit 1
+            if ! curl -L -o "$temp_file" https://github.com/neovim/neovim/releases/download/v0.10.3/nvim.appimage; then
+                echo "Failed to download neovim, check network connection"
+                exit 1
+            fi
+
+            chmod u+x "$temp_file"
+            mkdir -p ~/.local/bin
+            mv "$temp_file" "$nvim_path"
         fi
-
-        chmod u+x "$temp_file"
-        mkdir -p ~/.local/bin
-        mv "$temp_file" "$nvim_path"
     else
         echo "neovim already installed, skipping..."
     fi
 
     # install ulauncher
-    if ! command_exists ulauncher; then
-        sudo apt install -y software-properties-common
-        sudo add-apt-repository universe -y
-        sudo add-apt-repository ppa:agornostal/ulauncher -y
-        sudo apt update
-        sudo apt install -y ulauncher
+    if [ "$INSTALL_ULAUNCHER" = "yes" ]; then
+        if ! command_exists ulauncher; then
+            sudo apt install -y software-properties-common
+            sudo add-apt-repository universe -y
+            sudo add-apt-repository ppa:agornostal/ulauncher -y
+            sudo apt update
+            sudo apt install -y ulauncher
+        else
+            echo "ulauncher already installed, skipping..."
+        fi
     else
-        echo "ulauncher already installed, skipping..."
+        echo "skipping Ulauncher installation"
     fi
 fi
 

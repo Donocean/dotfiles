@@ -5,6 +5,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+current_os=$(uname)
 # fix color bug on wsl2 in window
 export COLORTERM=truecolor
 export TERM=screen-256color
@@ -68,6 +69,10 @@ zinit light zsh-users/zsh-autosuggestions
 zinit ice depth=1 wait"2" lucid
 zinit light hlissner/zsh-autopair
 
+if [ "$current_os" = "Linux" ]; then
+    alias fd='fdfind'
+fi
+
 # open file with vim
 v() {
     # [--type f] means file
@@ -115,7 +120,6 @@ function unproxy() {
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-current_os=$(uname)
 # check wether current os is MacOS
 if [ "$current_os" = "Darwin" ]; then
     # >>> conda initialize >>>
@@ -200,3 +204,8 @@ function pxsim() {
     export ROS_PACKAGE_PATH="$PX4_DIR:$ROS_PACKAGE_PATH"
     export ROS_PACKAGE_PATH="$PX4_DIR/Tools/simulation/gazebo-classic/sitl_gazebo-classic:$ROS_PACKAGE_PATH"
 }
+
+if [ "$current_os" = "Darwin" ]; then
+    export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:"$HOME/quadrotors_control/acados/lib"
+    export ACADOS_SOURCE_DIR="$HOME/quadrotors_control/acados/"
+fi
