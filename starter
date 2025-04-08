@@ -81,7 +81,7 @@ if grep -q '^ID=ubuntu$' /etc/os-release; then
         temp_file="$HOME/nvim-linux-x86_64.appimage"
         [ -f "$temp_file" ] && rm "$temp_file"
 
-        if ! curl -L -o "$temp_file" https://github.com/neovim/neovim/releases/download/v0.11.0/nvim-linux-x86_64.appimage; then
+        if ! curl -L -o "$temp_file" https://github.com/neovim/neovim/releases/download/v0.10.3/nvim-linux-x86_64.appimage; then
             echo "Failed to download neovim, check network connection"
             exit 1
         fi
