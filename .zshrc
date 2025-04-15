@@ -179,6 +179,7 @@ if [ -f /usr/share/colcon_cd/function/colcon_cd.sh ]; then
 
     # ros2
     source /opt/ros/humble/setup.zsh
+    export ros_workspace_source=install
 
     alias rcd='colcon_cd'
     alias rmsg='ros2 msg'
@@ -191,6 +192,8 @@ if [ -f /usr/share/colcon_cd/function/colcon_cd.sh ]; then
     alias rpkg='ros2 pkg'
 elif [ -f /opt/ros/noetic/setup.zsh ]; then
     source /opt/ros/noetic/setup.zsh
+    export ros_workspace_source=devel
+
     export ROS_HOSTNAME=localhost
     export ROS_MASTER_URI=http://localhost:11311
 
@@ -215,10 +218,8 @@ cpi() {
 
 export PLANNER_DIR=$HOME/my_planner
 export PX4_DIR=$HOME/PX4-Autopilot
-export PATH="$HOME/.local/bin/:$PATH"
-
-alias sp='source $PLANNER_DIR/devel/setup.zsh'
-alias pp='cd $PLANNER_DIR'
+alias sp="source $PLANNER_DIR/$ros_workspace_source/setup.zsh"
+alias pp="cd $PLANNER_DIR"
 
 function pxsim() {
     # run this after you move the "[$PX4_DIR/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models/D435i/lib/*.so]" file to the [$PX4_DIR/build/px4_sitl_default]
@@ -231,3 +232,4 @@ if [ "$current_os" = "Darwin" ]; then
     export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:"$HOME/quadrotors_control/acados/lib"
     export ACADOS_SOURCE_DIR="$HOME/quadrotors_control/acados/"
 fi
+export PATH="$HOME/.local/bin/:$PATH"
