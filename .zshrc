@@ -69,14 +69,21 @@ zinit light zsh-users/zsh-autosuggestions
 zinit ice depth=1 wait"2" lucid
 zinit light hlissner/zsh-autopair
 
-if [ "$current_os" = "Linux" ]; then
-    alias fd='fdfind'
-fi
-
 # open file with vim
 v() {
+    # check fd name
+    local fd_cmd
+    if command -v fd &>/dev/null; then
+        fd_cmd="fd"
+    elif command -v fdfind &>/dev/null; then
+        fd_cmd="fdfind"
+    else
+        echo "Error: 'fd' or 'fdfind' not found. Install fd-find." >&2
+        return 1
+    fi
+
     # [--type f] means file
-    export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
+    export FZF_DEFAULT_COMMAND="$fd_cmd --type f --hidden --follow --exclude .git"
 
     local file=$(fzf)
     if [[ -n "$file" ]]; then
@@ -86,8 +93,19 @@ v() {
 
 # fuzzy cd
 c() {
+    # check fd name
+    local fd_cmd
+    if command -v fd &>/dev/null; then
+        fd_cmd="fd"
+    elif command -v fdfind &>/dev/null; then
+        fd_cmd="fdfind"
+    else
+        echo "Error: 'fd' or 'fdfind' not found. Install fd-find." >&2
+        return 1
+    fi
+
     # [--type d] means directories
-    export FZF_DEFAULT_COMMAND='fd --type d --strip-cwd-prefix --hidden --follow --exclude .git'
+    export FZF_DEFAULT_COMMAND="$fd_cmd --type d --hidden --follow --exclude .git"
 
     local path=$(fzf)
     if [[ -n "$path" ]]; then
@@ -175,6 +193,10 @@ elif [ -f /opt/ros/noetic/setup.zsh ]; then
     source /opt/ros/noetic/setup.zsh
     export ROS_HOSTNAME=localhost
     export ROS_MASTER_URI=http://localhost:11311
+
+    # gpu support for gazebo-classic
+    export __NV_PRIME_RENDER_OFFLOAD=1
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
 fi
 
 # quick ssh connecting. for connecting OrangePi.
