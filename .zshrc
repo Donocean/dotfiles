@@ -169,6 +169,8 @@ else
     fi
     unset __conda_setup
     # <<< conda initialize <<<
+
+    alias open="nautilus ."
 fi
 
 # ros2
