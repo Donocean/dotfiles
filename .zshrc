@@ -170,7 +170,7 @@ else
     unset __conda_setup
     # <<< conda initialize <<<
 
-    alias open="nautilus ."
+    alias open="xdg-open ."
 fi
 
 # ros2
