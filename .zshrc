@@ -19,7 +19,6 @@ set -o vi
 # alias
 alias ..="cd .."
 alias vi="nvim"
-alias vf='vifm .'
 
 # esp
 alias ii=idf.py
@@ -235,3 +234,15 @@ if [ "$current_os" = "Darwin" ]; then
     export ACADOS_SOURCE_DIR="$HOME/quadrotors_control/acados/"
 fi
 export PATH="$HOME/.local/bin/:$PATH"
+
+vf() {
+    # 使用 --choose-dir - 参数运行 vifm，它会在退出时将当前目录打印到标准输出
+    local dir
+    dir="$(vifm . --choose-dir - "$@")"
+
+    # 检查 "dir" 是否是一个有效的、存在的目录
+    if [ -n "$dir" ] && [ -d "$dir" ]; then
+        # 如果是，就 cd 过去
+        cd "$dir"
+    fi
+}
