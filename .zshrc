@@ -121,9 +121,12 @@ fs() {
 
 # set proxy
 function proxy() {
-  export http_proxy=socks5://127.0.0.1:8888
-  export https_proxy=socks5://127.0.0.1:8888
-  export ALL_PROXY=socks5://127.0.0.1:8888
+  # export http_proxy=socks5://127.0.0.1:8888
+  # export https_proxy=socks5://127.0.0.1:8888
+  # export ALL_PROXY=socks5://127.0.0.1:8888
+
+  export http_proxy=http://127.0.0.1:7890
+  export https_proxy=http://127.0.0.1:7890
   echo -e "\e[32mProxy has been successfully set.\e[0m"
 }
 
