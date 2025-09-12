@@ -125,8 +125,10 @@ function proxy() {
   # export https_proxy=socks5://127.0.0.1:8888
   # export ALL_PROXY=socks5://127.0.0.1:8888
 
-  export http_proxy=http://127.0.0.1:7890
-  export https_proxy=http://127.0.0.1:7890
+  export http_proxy=http://192.168.2.165:7897
+  export https_proxy=http://192.168.2.165:7897
+  git config --global http.proxy $http_proxy
+  git config --global https.proxy $https_proxy
   echo -e "\e[32mProxy has been successfully set.\e[0m"
 }
 
@@ -135,6 +137,9 @@ function unproxy() {
   unset http_proxy
   unset https_proxy
   unset ALL_PROXY
+
+  git config --global --unset http.proxy
+  git config --global --unset https.proxy
   echo -e "\e[31mProxy has been unset.\e[0m"
 }
 

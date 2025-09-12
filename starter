@@ -87,6 +87,11 @@ if grep -q '^ID=ubuntu$' /etc/os-release; then
     # install neovim for x86_64 arch
     nvim_path="$HOME/.local/bin/nvim"
     if [ ! -f "$nvim_path" ]; then
+        # this is version is only work for rk3588 ubuntu22.
+        # For other version please fllow https://github.com/neovim/neovim/blob/master/INSTALL.md#install-from-source
+        # Note that the plugin mason.nvim is not support clangd and clang-format for rk3588(may be arm64?)
+        # please use the 'apt' to install the 'clangd' and 'clang-format-18', then you need to make a empty directory
+        # called 'clangd' and 'clang-format' in [~/.local/share/nvim/mason/packages/] to cheat mason that plugin has already been installed
         if [ "$IS_ARM" = "arm" ]; then
             echo "Installing Neovim for arm..."
             temp_dir="$HOME/neovim_bin_for_aarch64"
