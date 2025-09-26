@@ -122,6 +122,7 @@ if grep -q '^ID=ubuntu$' /etc/os-release; then
                 echo "git already installed, skipping..."
             fi
             sudo apt install -y build-essential
+            sudo apt install -y python3.8-venv #for mason
 
             temp_dir="$HOME/neovim"
             git clone https://github.com/neovim/neovim "$temp_dir" -b v0.10.3

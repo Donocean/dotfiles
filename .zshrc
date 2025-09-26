@@ -37,6 +37,30 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
+# set proxy
+function proxy() {
+  # export http_proxy=socks5://127.0.0.1:8888
+  # export https_proxy=socks5://127.0.0.1:8888
+  # export ALL_PROXY=socks5://127.0.0.1:8888
+
+  export http_proxy=http://192.168.2.165:7897
+  export https_proxy=http://192.168.2.165:7897
+  git config --global http.proxy $http_proxy
+  git config --global https.proxy $https_proxy
+  echo -e "\e[32mProxy has been successfully set.\e[0m"
+}
+
+# unset
+function unproxy() {
+  unset http_proxy
+  unset https_proxy
+  unset ALL_PROXY
+
+  git config --global --unset http.proxy
+  git config --global --unset https.proxy
+  echo -e "\e[31mProxy has been unset.\e[0m"
+}
+
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
 	print -P "%F{33}▓▒░ %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
@@ -117,30 +141,6 @@ fs() {
   if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
   file=$(rg --files-with-matches --no-messages "$1" | fzf --preview "highlight -O ansi -l {} 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}")
   [[ -n "$file" ]] && nvim "$file"
-}
-
-# set proxy
-function proxy() {
-  # export http_proxy=socks5://127.0.0.1:8888
-  # export https_proxy=socks5://127.0.0.1:8888
-  # export ALL_PROXY=socks5://127.0.0.1:8888
-
-  export http_proxy=http://192.168.2.165:7897
-  export https_proxy=http://192.168.2.165:7897
-  git config --global http.proxy $http_proxy
-  git config --global https.proxy $https_proxy
-  echo -e "\e[32mProxy has been successfully set.\e[0m"
-}
-
-# unset
-function unproxy() {
-  unset http_proxy
-  unset https_proxy
-  unset ALL_PROXY
-
-  git config --global --unset http.proxy
-  git config --global --unset https.proxy
-  echo -e "\e[31mProxy has been unset.\e[0m"
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
