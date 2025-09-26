@@ -209,6 +209,9 @@ elif [ -f /opt/ros/noetic/setup.zsh ]; then
     # gpu support for gazebo-classic
     export __NV_PRIME_RENDER_OFFLOAD=1
     export __GLX_VENDOR_LIBRARY_NAME=nvidia
+
+    # no ros1 warnings
+    export DISABLE_ROS1_EOL_WARNINGS=1
 fi
 
 # quick ssh connecting. for connecting OrangePi.
@@ -226,15 +229,18 @@ cpi() {
 }
 
 export PLANNER_DIR=$HOME/my_planner
-export PX4_DIR=$HOME/PX4-Autopilot
+# export PX4_DIR=$HOME/PX4-Autopilot
+export PX4_DIR=$HOME/px4_bili
 alias sp="source $PLANNER_DIR/$ros_workspace_source/setup.zsh"
 alias pp="cd $PLANNER_DIR"
 
 function pxsim() {
     # run this after you move the "[$PX4_DIR/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models/D435i/lib/*.so]" file to the [$PX4_DIR/build/px4_sitl_default]
-    source $PX4_DIR/Tools/simulation/gazebo-classic/setup_gazebo.bash $PX4_DIR $PX4_DIR/build/px4_sitl_default
+    # source $PX4_DIR/Tools/simulation/gazebo-classic/setup_gazebo.bash $PX4_DIR $PX4_DIR/build/px4_sitl_default
+    source $PX4_DIR/Tools/setup_gazebo.bash $PX4_DIR $PX4_DIR/build/px4_sitl_default
     export ROS_PACKAGE_PATH="$PX4_DIR:$ROS_PACKAGE_PATH"
-    export ROS_PACKAGE_PATH="$PX4_DIR/Tools/simulation/gazebo-classic/sitl_gazebo-classic:$ROS_PACKAGE_PATH"
+    # export ROS_PACKAGE_PATH="$PX4_DIR/Tools/simulation/gazebo-classic/sitl_gazebo-classic:$ROS_PACKAGE_PATH"
+    export ROS_PACKAGE_PATH="$PX4_DIR/Tools/sitl_gazebo:$ROS_PACKAGE_PATH"
 }
 
 if [ "$current_os" = "Darwin" ]; then

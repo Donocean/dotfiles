@@ -85,22 +85,52 @@ if grep -q '^ID=ubuntu$' /etc/os-release; then
     fi
 
     # install neovim for x86_64 arch
-    nvim_path="$HOME/.local/bin/nvim"
-    if [ ! -f "$nvim_path" ]; then
-        # this is version is only work for rk3588 ubuntu22.
+    if ! command_exists nvim; then
+        # this is version is only work for x86 arch.
         # For other version please fllow https://github.com/neovim/neovim/blob/master/INSTALL.md#install-from-source
         # Note that the plugin mason.nvim is not support clangd and clang-format for rk3588(may be arm64?)
         # please use the 'apt' to install the 'clangd' and 'clang-format-18', then you need to make a empty directory
         # called 'clangd' and 'clang-format' in [~/.local/share/nvim/mason/packages/] to cheat mason that plugin has already been installed
+        # intall vifm
+
+        # install build prerequisites
         if [ "$IS_ARM" = "arm" ]; then
             echo "Installing Neovim for arm..."
-            temp_dir="$HOME/neovim_bin_for_aarch64"
-            git clone https://gitee.com/Donocean/neovim_bin_for_aarch64.git "$temp_dir"
-            mkdir -p ~/.local/bin
-            cp -v "$temp_dir/nvim" "$nvim_path"
+            if ! command_exists ninja; then
+                sudo apt install -y ninja-build
+            else
+                echo "ninja already installed, skipping..."
+            fi
+            if ! command_exists gettext; then
+                sudo apt install -y gettext
+            else
+                echo "gettext already installed, skipping..."
+            fi
+            if ! command_exists cmake; then
+                sudo apt install -y cmake
+            else
+                echo "cmake already installed, skipping..."
+            fi
+            if ! command_exists curl; then
+                sudo apt install -y curl
+            else
+                echo "curl already installed, skipping..."
+            fi
+            if ! command_exists git; then
+                sudo apt install -y git
+            else
+                echo "git already installed, skipping..."
+            fi
+            sudo apt install -y build-essential
+
+            temp_dir="$HOME/neovim"
+            git clone https://github.com/neovim/neovim "$temp_dir" -b v0.10.3
+            cd "$temp_dir" && make -j"$(nproc)" CMAKE_BUILD_TYPE=RelWithDebInfo
+            sudo make install
             rm -rf "$temp_dir"
         else
             echo "Installing Neovim for x86_64..."
+            nvim_path="$HOME/.local/bin/nvim"
             temp_file="$HOME/nvim-linux-x86_64.appimage"
             [ -f "$temp_file" ] && rm "$temp_file"
 
