@@ -39,12 +39,14 @@ alias egrep='egrep --color=auto'
 
 # set proxy
 function proxy() {
-  # export http_proxy=socks5://127.0.0.1:8888
-  # export https_proxy=socks5://127.0.0.1:8888
-  # export ALL_PROXY=socks5://127.0.0.1:8888
+  # export http_proxy=socks5://127.0.0.1:7897
+  # export https_proxy=socks5://127.0.0.1:7897
+  # export ALL_PROXY=socks5://127.0.0.1:7897
 
-  export http_proxy=http://192.168.2.165:7897
-  export https_proxy=http://192.168.2.165:7897
+  # export http_proxy=http://192.168.1.101:7897
+  # export https_proxy=http://192.168.1.101:7897
+  export http_proxy=http://127.0.0.1:7897
+  export https_proxy=http://127.0.0.1:7897
   git config --global http.proxy $http_proxy
   git config --global https.proxy $https_proxy
   echo -e "\e[32mProxy has been successfully set.\e[0m"
@@ -205,6 +207,8 @@ elif [ -f /opt/ros/noetic/setup.zsh ]; then
 
     export ROS_HOSTNAME=localhost
     export ROS_MASTER_URI=http://localhost:11311
+    # export ROS_HOSTNAME=192.168.1.105
+    # export ROS_MASTER_URI=http://192.168.1.101:11311
 
     # gpu support for gazebo-classic
     export __NV_PRIME_RENDER_OFFLOAD=1
@@ -225,7 +229,7 @@ cpi() {
     export TERM=xterm
 
     # 执行 SSH 命令
-    ssh orangepi@192.168."$1"
+    ssh don@192.168."$1"
 }
 
 export PLANNER_DIR=$HOME/my_planner
