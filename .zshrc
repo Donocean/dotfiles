@@ -207,7 +207,7 @@ elif [ -f /opt/ros/noetic/setup.zsh ]; then
 
     export ROS_HOSTNAME=localhost
     export ROS_MASTER_URI=http://localhost:11311
-    # export ROS_HOSTNAME=192.168.1.105
+    # export ROS_HOSTNAME=192.168.1.102
     # export ROS_MASTER_URI=http://192.168.1.101:11311
 
     # gpu support for gazebo-classic
