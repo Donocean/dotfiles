@@ -29,7 +29,8 @@ done
 shopt -u dotglob
 
 command_exists() {
-    command -v "$1" >/dev/null 2>&1
+    dpkg -s gettext >/dev/null 2>&1
+    # command -v "$1" >/dev/null 2>&1
 }
 
 # (only for Ubuntu)
