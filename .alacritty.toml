@@ -1,0 +1,11 @@
+[window]
+decorations = "None"
+startup_mode = "Maximized"
+
+[font]
+size = 20
+# size = 15
+normal = { family = "UbuntuSansMono Nerd Font", style = "Medium" }
+
+[mouse]
+hide_when_typing = true

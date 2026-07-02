@@ -19,7 +19,6 @@ unset PathAppend
 
 # Editor
 export EDITOR="nvim"
-export TERMINAL='kitty'
 
 # Fzf
 export FZF_COMPLETION_TRIGGER='\\'

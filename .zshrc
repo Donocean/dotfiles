@@ -151,14 +151,14 @@ fs() {
 if [ "$current_os" = "Darwin" ]; then
     # >>> conda initialize >>>
     # !! Contents within this block are managed by 'conda init' !!
-    __conda_setup="$('/Users/don/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+    __conda_setup="$('$HOME/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
     if [ $? -eq 0 ]; then
         eval "$__conda_setup"
     else
-        if [ -f "/Users/don/miniconda3/etc/profile.d/conda.sh" ]; then
-            . "/Users/don/miniconda3/etc/profile.d/conda.sh"
+        if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+# . "$HOME/miniconda3/etc/profile.d/conda.sh"  # commented out by conda initialize
         else
-            export PATH="/Users/don/miniconda3/bin:$PATH"
+# export PATH="$HOME/miniconda3/bin:$PATH"  # commented out by conda initialize
         fi
     fi
     unset __conda_setup
@@ -166,14 +166,14 @@ if [ "$current_os" = "Darwin" ]; then
 else
     # >>> conda initialize >>>
     # !! Contents within this block are managed by 'conda init' !!
-    __conda_setup="$('/home/don/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+    __conda_setup="$('~/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
     if [ $? -eq 0 ]; then
         eval "$__conda_setup"
     else
-        if [ -f "/home/don/miniconda3/etc/profile.d/conda.sh" ]; then
-            . "/home/don/miniconda3/etc/profile.d/conda.sh"
+        if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+            . "$HOME/miniconda3/etc/profile.d/conda.sh"  # commented out by conda initialize
         else
-            export PATH="/home/don/miniconda3/bin:$PATH"
+            export PATH="$HOME/miniconda3/bin:$PATH"  # commented out by conda initialize
         fi
     fi
     unset __conda_setup
@@ -232,7 +232,10 @@ cpi() {
     ssh don@192.168."$1"
 }
 
-export PLANNER_DIR=$HOME/my_planner
+# export PLANNER_DIR=$HOME/vis_py/bench
+# export PLANNER_DIR=$HOME/my_planner
+# export PLANNER_DIR=$HOME/swarm-formation
+export PLANNER_DIR=$HOME/swarm
 # export PX4_DIR=$HOME/PX4-Autopilot
 export PX4_DIR=$HOME/px4_bili
 alias sp="source $PLANNER_DIR/$ros_workspace_source/setup.zsh"

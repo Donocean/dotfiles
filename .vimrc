@@ -29,45 +29,6 @@ syntax on
 highlight Statement cterm=bold
 highlight Comment cterm=bold
 
-
-" 1. Install "https://github.com/junegunn/vim-plug", 
-" 2. run ":PlugInstall"
-call plug#begin()
-
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-
-" multi cursor
-" 1. select words with Ctrl-n
-" 2. create cursors vertically with Ctrl-Down/Ctrl-Up
-" 3. select one character at a time with Shift-Arrows
-" 4. press "n" or "N" to get next/previous occurrence
-" 5. press "[" or "]" to select next/previous cursor
-" 6. press "q" or "Q" to skip and remove current and get next/previous oc;urrence
-" 7. start insert mode with i,a,I,A
-Plug 'mg979/vim-visual-multi'
-
-Plug 'jiangmiao/auto-pairs'
-Plug 'ap/vim-buftabline'
-
-Plug 'gcmt/wildfire.vim'
-Plug 'babaybus/DoxygenToolkit.vim'
-
-" file explorer
-Plug 'preservim/nerdtree'
-" jump
-Plug 'justinmk/vim-sneak'
-
-call plug#end()
-
-try
-    colorscheme ron
-    colorscheme retrobox
-catch
-    " avoid error
-endtry
-
 " paste in the insert mode
 inoremap <c-v> <c-r>"
 
@@ -120,26 +81,7 @@ nnoremap <c-s> :w<cr>
 vmap < <gv
 vmap > >gv
 
-nnoremap <space>n :nohl<cr>
-
-" remap jump
-let g:sneak#label = 1
-nnoremap q <Plug>Sneak_s
-nnoremap Q <Plug>Sneak_S
-nnoremap <space>q q
-
-" toggle fzf
-nnoremap <space><space> :FZF<cr>
-
-" toggle file explorer
-nmap <space>e :NERDTreeToggle<cr>
-
-" wildfire use
-map <cr> <Plug>(wildfire-fuel)
-vmap <bs> <Plug>(wildfire-water)
-
-" generate doxygen
-nnoremap <space>cn :Dox<cr>
+nnoremap <space><cr> :nohl<cr>
 
 " use <c-d> to quit terminal
 nnoremap <space>w :set splitbelow<cr>:terminal<cr>
