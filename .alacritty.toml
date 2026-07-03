@@ -1,11 +1,22 @@
 [window]
 decorations = "None"
 startup_mode = "Maximized"
+option_as_alt = "Both"
 
 [font]
 size = 20
 # size = 15
-normal = { family = "UbuntuSansMono Nerd Font", style = "Medium" }
+
+# normal = { family = "UbuntuSansMono Nerd Font Mono", style = "Regular" }
+# bold = { family = "UbuntuSansMono Nerd Font Mono", style = "Bold" }
+# italic = { family = "UbuntuSansMono Nerd Font Mono", style = "Italic" }
+# bold_italic = { family = "UbuntuSansMono Nerd Font Mono", style = "Bold Italic" }
+
+normal = { family = "IosevkaTerm Nerd Font Mono", style = "Regular" }
+bold = { family = "IosevkaTerm Nerd Font Mono", style = "Bold" }
+italic = { family = "IosevkaTerm Nerd Font Mono", style = "Italic" }
+bold_italic = { family = "IosevkaTerm Nerd Font Mono", style = "Bold Italic" }
+
 
 [mouse]
 hide_when_typing = true
