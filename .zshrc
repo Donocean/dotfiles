@@ -8,7 +8,7 @@ fi
 current_os=$(uname)
 # fix color bug on wsl2 in window
 export COLORTERM=truecolor
-export TERM=screen-256color
+export TERM=xterm-256color
 
 alias condaac="conda activate"
 alias condade="conda deactivate"
