@@ -20,3 +20,8 @@ bold_italic = { family = "IosevkaTerm Nerd Font Mono", style = "Bold Italic" }
 
 [mouse]
 hide_when_typing = true
+
+[[keyboard.bindings]]
+key = "E"
+mods = "Command"
+chars = "\u001be"
