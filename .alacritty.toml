@@ -32,6 +32,7 @@ bindings = [
   { key = "T", mods = "Command", chars = "\u001bt" },
   { key = "P", mods = "Command", chars = "\u001bp" },
   { key = "N", mods = "Command", chars = "\u001bn" },
+  { key = "M", mods = "Command", chars = "\u001bm" },
   { key = "[", mods = "Command", chars = "\u001b[" },
   { key = "V", mods = "Control|Shift", action = "Paste" },
   { key = "1", mods = "Command", chars = "\u001b1" },
