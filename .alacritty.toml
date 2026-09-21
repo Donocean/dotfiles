@@ -29,6 +29,8 @@ bindings = [
   { key = "S", mods = "Command", chars = "\u001bs" },
   { key = "L", mods = "Command", chars = "\u001bl" },
   { key = "H", mods = "Command", chars = "\u001bh" },
+  { key = "J", mods = "Command", chars = "\u001bj" },
+  { key = "K", mods = "Command", chars = "\u001bk" },
   { key = "T", mods = "Command", chars = "\u001bt" },
   { key = "P", mods = "Command", chars = "\u001bp" },
   { key = "N", mods = "Command", chars = "\u001bn" },
