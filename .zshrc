@@ -229,13 +229,16 @@ cpi() {
     export TERM=xterm
 
     # 执行 SSH 命令
-    ssh don@192.168."$1"
+    ssh "$1"@192.168."$2"
 }
 
-# export PLANNER_DIR=$HOME/vis_py/bench
+export DRONE_ID=100
+export PLANNER_DIR=$HOME/vis_py/bench
 # export PLANNER_DIR=$HOME/my_planner
 # export PLANNER_DIR=$HOME/swarm-formation
-export PLANNER_DIR=$HOME/swarm
+# export PLANNER_DIR=$HOME/swarm
+# export PLANNER_DIR=$HOME/tracker/Elastic-Tracker
+# export PLANNER_DIR=$HOME/tracker/Eva-Tracker/
 # export PX4_DIR=$HOME/PX4-Autopilot
 export PX4_DIR=$HOME/px4_bili
 alias sp="source $PLANNER_DIR/$ros_workspace_source/setup.zsh"
@@ -255,6 +258,15 @@ if [ "$current_os" = "Darwin" ]; then
     export ACADOS_SOURCE_DIR="$HOME/quadrotors_control/acados/"
 fi
 export PATH="$HOME/.local/bin/:$PATH"
+# opencode
+export PATH="$HOME/.opencode/bin:$PATH"
+# ssh chinese support
+export LC_CTYPE=zh_CN.UTF-8
+
+# CUDA 13.0
+export CUDA_HOME=/usr/local/cuda-13.0
+export PATH="$CUDA_HOME/bin:$PATH"
+export LD_LIBRARY_PATH="$CUDA_HOME/lib64${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
 vf() {
     # 使用 --choose-dir - 参数运行 vifm，它会在退出时将当前目录打印到标准输出
@@ -266,4 +278,43 @@ vf() {
         # 如果是，就 cd 过去
         cd "$dir"
     fi
+}
+
+# use gf2(https://github.com/nakst/gf) to debug c/cpp codec
+gfa() {
+    if [ -z "$1" ]; then
+        echo "Usage: gfa <program_name>"
+        return 1
+    fi
+
+    local name="$1"
+    local pid=""
+    local exe=""
+
+    # 找到真正 executable basename 匹配的进程，
+    # 避免误匹配 grep、roslaunch、gdb 等命令行
+    for p in $(pgrep -f "$name"); do
+        [ -e "/proc/$p/exe" ] || continue
+
+        exe=$(readlink -f "/proc/$p/exe" 2>/dev/null)
+
+        if [ "$(basename "$exe")" = "$name" ]; then
+            pid="$p"
+            break
+        fi
+    done
+
+    if [ -z "$pid" ]; then
+        echo "Process '$name' not found."
+        return 1
+    fi
+
+    echo "Attach:"
+    echo "  PID : $pid"
+    echo "  EXE : $exe"
+
+    # enable debug trace stack
+    echo "1" | sudo -S sysctl kernel.yama.ptrace_scope=0
+
+    gf2 "$exe" -p "$pid"
 }
