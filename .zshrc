@@ -220,8 +220,9 @@ fi
 
 # quick ssh connecting. for connecting OrangePi.
 cpi() {
-    if [ -z "$1" ]; then
-        echo "请输入IP!\n如IP: 192.168.1.100\n输入:\e[31m cpi 1.100\e[0m "
+    if [ -z "$1" ] || [ -z "$2" ]; then
+        echo "用法: cpi <用户名> <IP后两段>"
+        echo "例如: cpi orangepi 1.100"
         return 1
     fi
 
@@ -229,7 +230,7 @@ cpi() {
     export TERM=xterm
 
     # 执行 SSH 命令
-    ssh "$1"@192.168."$2"
+    ssh -R 7897:127.0.0.1:7897 "$1@192.168.$2"
 }
 
 export DRONE_ID=100
